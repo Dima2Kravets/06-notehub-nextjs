@@ -10,7 +10,7 @@ import { useState } from "react";
 import Pagination from "@/components/Pagination/Pagination";
 import { useDebouncedCallback } from "use-debounce";
 import Modal from "@/components/Modal/Modal";
-export default function App() {
+export default function NoteClient() {
   const [page, setPage] = useState(1);
   const [searchQuery, setSearchQuery] = useState("");
   const debouncedSetSearchQuery = useDebouncedCallback((query: string) => {

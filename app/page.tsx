@@ -6,7 +6,7 @@ export const metadata: Metadata = {
   };
 export default function Home() {
   return (
-    <div className={css.container}>
+    <main className={css.container}>
     <h1 className={css.title}>Welcome to NoteHub</h1>
     <p className={css.description}>
       NoteHub is a simple and efficient application designed for managing
@@ -19,6 +19,6 @@ export default function Home() {
       NoteHub offers a streamlined experience for anyone who values clarity
       and productivity.
     </p>
-  </div>
+  </main>
   );
 }
