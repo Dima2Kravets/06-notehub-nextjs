@@ -1,15 +1,11 @@
-import NoteList from "@/components/NoteList/NoteList";
-import { getNotes } from "@/lib/api";
+import App from "@/app/notes/Notes.client";
 
-const Notes = async () => {
-  const response = await getNotes();
-
+const Notes = () => {
   return (
-    <section>
-      <h1>Notes List</h1>
-      {response?.notes?.length > 0 && <NoteList notes={response.notes} />}
-    </section>
-  );
-}
+    <div>
+      <App />
+    </div>
+   );
+};
 
 export default Notes;

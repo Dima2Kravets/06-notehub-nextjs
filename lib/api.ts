@@ -1,31 +1,58 @@
 import axios from "axios";
 
-export type Note = {
-  id: string;
-  title: string;
-  content: string;
-  categoryId: string;
-  userId: string;
-  createdAt: string;
-  updatedAt: string;
-};
-
-export type NoteListResponse = {
+import type { Note, NewNoteData } from "@/types/note"
+interface FetchNotesResponse {
   notes: Note[];
-  total: number;
+  totalPages: number;
+  }
+const myKey = process.env.NEXT_PUBLIC_NOTEHUB_TOKEN;
+axios.defaults.baseURL = "https://notehub-public.goit.study/api";
+export const fetchNotes = async (
+  page: number,
+  searchTerm: string,
+  perPage: number = 12,
+  sortBy: "created" | "updated" | "title" = "created"
+): Promise<FetchNotesResponse> => {
+  const response = await axios.get<FetchNotesResponse>(
+    `/notes`, {
+      headers: {
+        Authorization: `Bearer ${myKey}`,
+      },
+      params: {
+      page,
+      perPage,
+      sortBy,
+      search: searchTerm,
+      },
+  }
+  );
+  return response.data;
 };
 
-axios.defaults.baseURL = "https://next-docs-api.onrender.com";
+export const deleteNote = async (noteId: string): Promise<Note>=> {
+  const response = await axios.delete<Note>(`/notes/${noteId}`,{
+      headers: {
+        Authorization: `Bearer ${myKey}`,
+      }
+  } );
+  return response.data;
+};
 
-const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
-
-export const getNotes = async () => {
-  await delay(2000);
-  const res = await axios.get<NoteListResponse>('/notes');
+export const createNote = async (noteData: NewNoteData):Promise<Note> => {
+  const res = await axios.post<Note>("/notes", noteData, {
+      headers: {
+        Authorization: `Bearer ${myKey}`,
+      }
+  });
   return res.data;
 };
 
-export const getSingleNote = async (id: string) => {
-  const res = await axios.get<Note>(`/notes/${id}`);
-  return res.data;
+
+export const fetchNoteById = async (id: string) => {
+  const respons = await axios.get<Note>(`/notes/${id}`, {
+      headers: {
+        Authorization: `Bearer ${myKey}`,
+      }
+  });
+  return respons.data;
 };
